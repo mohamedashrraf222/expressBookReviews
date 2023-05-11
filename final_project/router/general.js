@@ -6,17 +6,17 @@ const public_users = express.Router();
 const axios = require("axios").default;
 
 public_users.post("/register", (req, res) => {
-  if (isValid(req.query.username)) {
+  if (isValid(req.body.username)) {
     return res.status(300).json({ message: "the username is already used" });
   } else {
-    users.push({ username: req.query.username, password: req.query.password });
+    users.push({ username: req.body.username, password: req.body.password });
     return res.status(200).json({ message: "Thanks for your registration" });
   }
 });
 
 // Get the book list available in the shop
 public_users.get("/", function (req, res) {
-  return res.status(200).json(books);
+  return res.status(200).json({books: books});
 });
 
 // Get book details based on ISBN
@@ -99,9 +99,6 @@ const gettingBooksWithTitle = async (title) => {
     console.error(error);
   }
 };
-
-gettingBooksWithTitle('Fairy tales')
-
 
 
 module.exports.general = public_users;
